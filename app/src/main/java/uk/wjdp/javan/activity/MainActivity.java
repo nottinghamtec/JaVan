@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        driveNavigate();
     }
 
     @Override
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_drive) {
-            doFragmentNavigation(new DriveFragment());
+            driveNavigate();
         } else if (id == R.id.nav_log) {
             doFragmentNavigation(new LogListFragment());
         } else if (id == R.id.nav_drivers) {
@@ -93,6 +96,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void driveNavigate() {
+        doFragmentNavigation(new DriveFragment());
     }
 
     public void doFragmentNavigation(Fragment fragment) {
@@ -106,6 +113,14 @@ public class MainActivity extends AppCompatActivity
     public void doFragmentNavigation(Fragment fragment, Bundle bundle) {
         fragment.setArguments(bundle);
         doFragmentNavigation(fragment);
+    }
+
+    public void doStepFragmentNavigation(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void doStepFragmentNavigation(Fragment fragment, Bundle bundle) {

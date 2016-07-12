@@ -26,8 +26,7 @@ import uk.wjdp.javan.model.Driver;
 /**
  * Created by will on 11/07/16.
  */
-public class DriverListFragment extends Fragment {
-    private ListView driverListView;
+public class DriverListFragment extends DriverListBaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,35 +42,11 @@ public class DriverListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
-        driverListView = (ListView)getView().findViewById(R.id.driver_list_view);
-        initListView(driverListView);
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    public void initListView(ListView listView) {
-        String[] debugItems = {"debug item 1", "debug item 2", "debug item 3"};
-        List<Driver> driverItems = Driver.getAll();
-        ArrayList<String> listItems = new ArrayList<>();
-
-        for (Driver d : driverItems) {
-            listItems.add(d.name);
-        }
-
-        ArrayAdapter<Driver> debugAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, driverItems);
-        listView.setAdapter(debugAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Driver d = (Driver)parent.getItemAtPosition(position);
-                Bundle b = new Bundle();
-                b.putLong("id", d.getId());
-                MainActivity activity = (MainActivity)getActivity();
-                activity.doStepFragmentNavigation(new DriverDetailFragment(), b);
-            }
-        });
+    public void driverSelect(Driver driver) {
+        Bundle b = new Bundle();
+        b.putLong("id", driver.getId());
+        MainActivity activity = (MainActivity)getActivity();
+        activity.doStepFragmentNavigation(new DriverDetailFragment(), b);
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -118,7 +93,7 @@ public class DriverListFragment extends Fragment {
                                 Log.v("DriverListFragment", userInput.getText().toString());
                                 Driver new_driver = new Driver(userInput.getText().toString());
                                 new_driver.save();
-                                initListView(driverListView);
+                                reloadData();
                             }
                         })
                 .setNegativeButton("Cancel",

@@ -11,12 +11,12 @@ import uk.wjdp.javan.R;
 /**
  * Created by will on 11/07/16.
  */
-public class DriveFragment extends MainActivityFragment {
+public class DrivingFragment extends MainActivityFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate layout for fragment
-        return inflater.inflate(R.layout.fragment_drive, container, false);
+        return inflater.inflate(R.layout.fragment_driving, container, false);
     }
 
     @Override

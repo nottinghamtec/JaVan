@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    tools:showIn="@layout/activity_main">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
@@ -22,14 +23,10 @@
 
     </android.support.design.widget.AppBarLayout>
     <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="56dp">
-        <fragment
-            android:id="@+id/content_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="uk.wjdp.javan.fragment.DriveFragment"
-            tools:layout="@layout/fragment_drive" />
+
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

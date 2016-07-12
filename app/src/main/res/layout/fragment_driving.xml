@@ -7,7 +7,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/driveStop"
+        android:background="@color/driveGo"
         android:layout_weight="1">
 
         <LinearLayout
@@ -61,7 +61,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
+        android:text="Sign Out"
         android:id="@+id/button_drive"
         android:textSize="40sp"
         android:background="@color/colorAccent"
