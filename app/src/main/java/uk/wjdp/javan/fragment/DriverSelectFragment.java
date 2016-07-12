@@ -28,6 +28,7 @@ public class DriverSelectFragment extends DriverListBaseFragment {
     public void driverSelect(Driver driver) {
         Bundle bundle = new Bundle();
         bundle.putLong("id", driver.getId());
+        bundle.putBoolean("end", false);
         mainActivity.doStepFragmentNavigation(new MileageInputFragment(), bundle);
     }
 

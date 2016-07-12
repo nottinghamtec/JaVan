@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import uk.wjdp.javan.R;
 import uk.wjdp.javan.fragment.DriveFragment;
 import uk.wjdp.javan.fragment.DriverListFragment;
+import uk.wjdp.javan.fragment.DrivingFragment;
 import uk.wjdp.javan.fragment.LogListFragment;
+import uk.wjdp.javan.model.LogItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        driveNavigate();
+        doDriveNavigate();
     }
 
     @Override
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_drive) {
-            driveNavigate();
+            doDriveNavigate();
         } else if (id == R.id.nav_log) {
             doFragmentNavigation(new LogListFragment());
         } else if (id == R.id.nav_drivers) {
@@ -98,16 +100,24 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void driveNavigate() {
-        doFragmentNavigation(new DriveFragment());
+    public void doDriveNavigate() {
+        LogItem currentLog = LogItem.getCurrent();
+        if (currentLog != null) {
+            // Drive in progress, display status
+            doFragmentNavigation(new DrivingFragment());
+        }
+        else {
+            // No drive, allow user to sign-in
+            doFragmentNavigation(new DriveFragment());
+        }
     }
 
     public void doFragmentNavigation(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.beginTransaction()
                        .replace(R.id.content_frame, fragment)
                        .commit();
-
     }
 
     public void doFragmentNavigation(Fragment fragment, Bundle bundle) {

@@ -36,13 +36,13 @@
                 android:textSize="20sp"
                 android:paddingBottom="32sp"
                 android:format12Hour="dd MMMM yyyy"
-                android:format24Hour="HH:MM" />
+                android:format24Hour="dd MMMM yyyy" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No Driver"
-                android:id="@+id/text_driver_name"
+                android:id="@+id/text_driverName"
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="6sp"
                 android:textSize="20sp"

@@ -1,8 +1,6 @@
 package uk.wjdp.javan.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +8,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import uk.wjdp.javan.R;
 import uk.wjdp.javan.model.Driver;
+import uk.wjdp.javan.model.LogItem;
 
 /**
  * Created by will on 11/07/16.
  */
-public class MileageInputFragment extends Fragment implements View.OnClickListener {
-    private Driver driver;
-    private Integer mileage = 0;
-    private TextView textView_mileage;
+public class MileageInputFragment extends MainActivityFragment implements View.OnClickListener {
+    protected Driver driver;
+    protected Integer mileage = 0;
+    protected TextView textView_mileage;
+    protected Boolean end;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Bundle arguments = getArguments();
         driver = Driver.getById(arguments.getLong("id"));
+        end = arguments.getBoolean("end");
         super.onCreate(savedInstanceState);
     }
 
@@ -115,6 +114,20 @@ public class MileageInputFragment extends Fragment implements View.OnClickListen
 
         switch (view.getId()) {
             case R.id.imageButton_confirm:
+                // TODO warn if mileage is below previous
+
+                if (end) {
+                    // Sign-out
+                    LogItem logItem = LogItem.getCurrent();
+                    logItem.signOut(mileage);
+                    mainActivity.doDriveNavigate();
+                }
+                else {
+                    // Sign-in
+                    LogItem logItem = new LogItem(driver, mileage);
+                    logItem.save();
+                    mainActivity.doDriveNavigate();
+                }
                 break;
             case R.id.imageButton_delete:
                 // Convert mileage to a string, remove last char and convert back to integer

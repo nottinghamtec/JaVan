@@ -36,7 +36,7 @@
                 android:textSize="20sp"
                 android:paddingBottom="32sp"
                 android:format12Hour="dd MMMM yyyy"
-                android:format24Hour="HH:MM" />
+                android:format24Hour="dd MMMM yyyy" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="000000 miles"
+                android:text="No Driving Logged"
                 android:id="@+id/text_miles"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>

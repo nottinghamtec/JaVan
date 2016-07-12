@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by will on 11/07/16.
  */
-@Table(name = "Drivers")
+@Table(name = "LogItems")
 public class LogItem extends Model {
     @Column(name = "driver_id")
     public Long driver_id;
@@ -38,6 +38,16 @@ public class LogItem extends Model {
         this.start_calendar = Calendar.getInstance();
     }
 
+    public Driver getDriver() {
+        return Driver.getById(this.driver_id);
+    }
+
+    public void signOut(Integer end_mileage) {
+        this.end_mileage = end_mileage;
+        this.end_calendar = Calendar.getInstance();
+        this.save();
+    }
+
     public static List<LogItem> getAll() {
         return new Select()
                 .from(LogItem.class)
@@ -50,6 +60,26 @@ public class LogItem extends Model {
                 .from(LogItem.class)
                 .where("id = ?", id)
                 .executeSingle();
+    }
+
+    public static LogItem getCurrent() {
+        return new Select()
+                .from(LogItem.class)
+                .where("end_calendar IS NULL")
+                .where("end_mileage IS NULL")
+                .executeSingle();
+    }
+
+    public static LogItem getLast() {
+        LogItem current = getCurrent();
+        if (current != null) {
+            return current;
+        } else {
+            return new Select()
+                    .from(LogItem.class)
+                    .orderBy("end_calendar DESC")
+                    .executeSingle();
+        }
     }
 
     @Override
